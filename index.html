@@ -105,7 +105,7 @@ z-index:1;
 
 <button onclick="startCelebration()">اضغطي هنا</button>
 
-<p id="stage2-text"></p>
+<p id="stage2" style="margin-top:25px;font-size:20px;"></p>
 
 <audio id="birthdaySong" loop>
   <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a" type="audio/mp4">
@@ -165,7 +165,7 @@ animate();
 
 /* تشغيل المرحلة الثانية والأغنية */
 function startCelebration(){
-document.getElementById("stage2-text").innerHTML="🎉 استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨";
+document.getElementById("stage2").innerHTML="🎉 استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨";
 document.getElementById("birthdaySong").play();
 startFireworks();
 }
