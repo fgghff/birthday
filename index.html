@@ -16,16 +16,18 @@ color:white;
 overflow:hidden;
 background:linear-gradient(135deg,#ff6fa5,#ff9ec9,#ffd6ea);
 }
+
 .container{
 background:rgba(255,255,255,0.18);
 backdrop-filter:blur(15px);
-padding:45px;
+padding:50px;
 border-radius:25px;
 box-shadow:0 15px 40px rgba(0,0,0,0.25);
 width:90%;
 max-width:700px;
 position:relative;
 }
+
 .profile{
 width:220px;
 height:220px;
@@ -35,9 +37,10 @@ border:6px solid white;
 box-shadow:0 0 20px rgba(0,0,0,0.35);
 margin-bottom:20px;
 }
-h1{font-size:40px;margin:15px 0;}
+
+h1{font-size:38px;margin:15px 0;}
 h2{margin:0;}
-p{font-size:20px;line-height:1.8;}
+p{font-size:19px;line-height:1.8;}
 button{
 margin-top:25px;
 padding:14px 35px;
@@ -50,6 +53,8 @@ cursor:pointer;
 transition:0.3s;
 }
 button:hover{transform:scale(1.08);background:#ffe3ef;}
+
+/* القلوب */
 .heart{
 position:fixed;
 bottom:-40px;
@@ -62,6 +67,8 @@ pointer-events:none;
 0%{transform:translateY(0);opacity:1;}
 100%{transform:translateY(-120vh);opacity:0;}
 }
+
+/* الألعاب النارية */
 canvas{
 position:fixed;
 top:0;left:0;
@@ -76,7 +83,7 @@ z-index:1;
 
 <canvas id="fireworks"></canvas>
 
-<div class="container">
+<div class="container" id="stage1">
 
 <img class="profile" src="https://a.top4top.io/p_3723fzcei0.jpg">
 
@@ -91,15 +98,23 @@ z-index:1;
 اتمنى لك سنة مليئة بالفرح والنجاح والاحلام الجميلة
 </p>
 
-<p>من حبيبك عبدالله ❤️</p>
+<p>
+من حبيبك عبدالله ❤️
+</p>
 
 <button onclick="startCelebration()">اضغطي هنا</button>
 
 </div>
 
-<audio id="birthdaySong" src="https://www.esm3.com/song-47662.mp3"></audio>
+<div class="container" id="stage2" style="display:none;">
+<h1>🎉 لنحتفل الآن 🎉</h1>
+<p>استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨</p>
+</div>
+
+<audio id="birthdaySong" src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a"></audio>
 
 <script>
+/* القلوب */
 function createHeart(){
 const heart=document.createElement("div");
 heart.className="heart";
@@ -107,10 +122,11 @@ heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
 heart.style.animationDuration=(4+Math.random()*3)+"s";
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),7000);
+setTimeout(()=>{heart.remove();},7000);
 }
 setInterval(createHeart,350);
 
+/* الألعاب النارية */
 function startFireworks(){
 const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
@@ -133,7 +149,7 @@ life:100
 function animate(){
 ctx.fillStyle="rgba(0,0,0,0.15)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
-particles.forEach((p,i)=>{
+particles.forEach((p,index)=>{
 p.x+=Math.cos(p.angle)*p.speed;
 p.y+=Math.sin(p.angle)*p.speed;
 p.life--;
@@ -141,7 +157,7 @@ ctx.beginPath();
 ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
 ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
 ctx.fill();
-if(p.life<=0)particles.splice(i,1);
+if(p.life<=0){particles.splice(index,1);}
 });
 requestAnimationFrame(animate);
 }
@@ -149,11 +165,12 @@ setInterval(createFirework,700);
 animate();
 }
 
+/* تشغيل المرحلة الثانية والأغنية */
 function startCelebration(){
+document.getElementById("stage2").style.display="block";
 document.getElementById("birthdaySong").play();
 startFireworks();
 }
 </script>
-
 </body>
 </html>
