@@ -26,6 +26,7 @@ box-shadow:0 15px 40px rgba(0,0,0,0.25);
 width:90%;
 max-width:700px;
 position:relative;
+z-index:2;
 }
 
 .profile{
@@ -83,7 +84,7 @@ z-index:1;
 
 <canvas id="fireworks"></canvas>
 
-<div class="container" id="stage1">
+<div class="container">
 
 <img class="profile" src="https://a.top4top.io/p_3723fzcei0.jpg">
 
@@ -102,16 +103,13 @@ z-index:1;
 من حبيبك عبدالله ❤️
 </p>
 
-<button onclick="startCelebration()">اضغطي هنا</button>
+<button id="fingerprintBtn">ضع بصمتك هنا للانتقال</button>
 
-</div>
+<p id="stage2" style="margin-top:25px;font-size:20px;"></p>
 
-<div class="container" id="stage2" style="display:none;">
-<h1>🎉 لنحتفل الآن 🎉</h1>
-<p>استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨</p>
-</div>
-
-<audio id="birthdaySong" src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a"></audio>
+<audio id="birthdaySong" loop>
+  <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a" type="audio/mp4">
+</audio>
 
 <script>
 /* القلوب */
@@ -165,12 +163,35 @@ setInterval(createFirework,700);
 animate();
 }
 
-/* تشغيل المرحلة الثانية والأغنية */
-function startCelebration(){
-document.getElementById("stage2").style.display="block";
-document.getElementById("birthdaySong").play();
-startFireworks();
+/* تشغيل المرحلة الثانية والأغنية عند البصمة */
+async function startCelebrationWithFingerprint() {
+  if(!window.PublicKeyCredential){
+    alert("المتصفح لا يدعم البصمة، استخدم الزر العادي بدلاً من ذلك");
+    return;
+  }
+  try{
+    const publicKey = {
+      challenge: new Uint8Array(32),
+      rp: { name: "عيد ميلاد رانيا" },
+      user: { id: new Uint8Array(16), name: "Abdullah", displayName: "Abdullah" },
+      pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+      timeout: 60000,
+      authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
+      attestation: "none"
+    };
+    const credential = await navigator.credentials.create({ publicKey });
+    if(credential){
+      document.getElementById("stage2").innerHTML="🎉 استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨";
+      document.getElementById("birthdaySong").play();
+      startFireworks();
+    }
+  } catch(err){
+    alert("البصمة لم تنجح او المتصفح لا يدعمها");
+    console.log(err);
+  }
 }
+
+document.getElementById("fingerprintBtn").addEventListener("click", startCelebrationWithFingerprint);
 </script>
 </body>
 </html>
