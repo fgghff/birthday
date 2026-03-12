@@ -3,72 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <title>عيد ميلاد سعيد رانيا</title>
-
 <style>
-
-*{
-box-sizing:border-box;
-}
-
+*{box-sizing:border-box;margin:0;padding:0;}
 body{
-margin:0;
-padding:0;
-font-family:Tahoma, Arial;
-background:linear-gradient(135deg,#ff6fa5,#ff9ec9,#ffd6ea);
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
+font-family:tahoma, arial;
 color:white;
 overflow:hidden;
+background:linear-gradient(135deg,#ff6fa5,#ff9ec9,#ffd6ea);
 }
-
-/* الصندوق الرئيسي */
 
 .container{
 background:rgba(255,255,255,0.18);
 backdrop-filter:blur(15px);
-padding:40px;
+padding:50px;
 border-radius:25px;
 box-shadow:0 15px 40px rgba(0,0,0,0.25);
 width:90%;
-max-width:650px;
-z-index:2;
+max-width:700px;
+position:relative; /* يمنع تحرك المستطيل */
 }
 
-/* صورة رانيا */
-
 .profile{
-width:150px;
-height:150px;
+width:180px;
+height:180px;
 border-radius:50%;
 object-fit:cover;
 border:6px solid white;
 box-shadow:0 0 20px rgba(0,0,0,0.35);
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
-/* العناوين */
-
-h1{
-font-size:36px;
-margin:10px 0;
-}
-
-h2{
-margin:0;
-}
-
-/* النص */
-
-p{
-font-size:19px;
-line-height:1.8;
-}
-
-/* زر */
-
+h1{font-size:38px;margin:15px 0;}
+h2{margin:0;}
+p{font-size:19px;line-height:1.8;}
 button{
 margin-top:25px;
 padding:14px 35px;
@@ -80,14 +52,9 @@ color:#ff3b7f;
 cursor:pointer;
 transition:0.3s;
 }
-
-button:hover{
-transform:scale(1.08);
-background:#ffe3ef;
-}
+button:hover{transform:scale(1.08);background:#ffe3ef;}
 
 /* القلوب */
-
 .heart{
 position:fixed;
 bottom:-40px;
@@ -96,23 +63,12 @@ animation:floatUp linear forwards;
 opacity:0.9;
 pointer-events:none;
 }
-
 @keyframes floatUp{
-
-0%{
-transform:translateY(0);
-opacity:1;
-}
-
-100%{
-transform:translateY(-120vh);
-opacity:0;
-}
-
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-120vh);opacity:0;}
 }
 
 /* الألعاب النارية */
-
 canvas{
 position:fixed;
 top:0;
@@ -122,15 +78,13 @@ height:100%;
 pointer-events:none;
 z-index:1;
 }
-
 </style>
 </head>
-
 <body>
 
 <canvas id="fireworks"></canvas>
 
-<div class="container">
+<div class="container" id="stage1">
 
 <img class="profile" src="https://a.top4top.io/p_3723fzcei0.jpg">
 
@@ -138,70 +92,52 @@ z-index:1;
 <h2>الى حبيبتي رانيا</h2>
 
 <p>
-اليوم ليس يوما عاديا  
-اليوم هو اليوم الذي جاءت فيه اجمل انسانة في حياتي  
-رانيا وجودك جعل حياتي اجمل واكثر نورا  
-ابتسامتك تجعل قلبي سعيد دائما  
-اتمنى لك سنة مليئة بالفرح والنجاح والاحلام الجميلة  
+اليوم ليس يوما عاديا<br>
+اليوم هو اليوم الذي جاءت فيه اجمل انسانة في حياتي<br>
+رانيا وجودك جعل حياتي اجمل واكثر نورا<br>
+ابتسامتك تجعل قلبي سعيد دائما<br>
+اتمنى لك سنة مليئة بالفرح والنجاح والاحلام الجميلة
 </p>
 
 <p>
 من حبيبك عبدالله ❤️
 </p>
 
-<button onclick="celebrate()">اضغطي هنا</button>
+<button onclick="nextStage()">اضغطي هنا</button>
 
 </div>
 
+<div class="container" id="stage2" style="display:none;">
+<h1>🎉 لنحتفل الآن 🎉</h1>
+<p>استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨</p>
+</div>
+
+<audio id="birthdaySong" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
 <script>
-
 /* القلوب */
-
 function createHeart(){
-
 const heart=document.createElement("div");
-
 heart.className="heart";
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"vw";
 heart.style.animationDuration=(4+Math.random()*3)+"s";
-
 document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},7000);
-
+setTimeout(()=>{heart.remove();},7000);
 }
-
 setInterval(createHeart,350);
 
-/* الاحتفال */
-
-function celebrate(){
-startFireworks();
-}
-
 /* الألعاب النارية */
-
 function startFireworks(){
-
 const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
-
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-
 let particles=[];
-
 function createFirework(){
-
 let x=Math.random()*canvas.width;
 let y=Math.random()*canvas.height/2;
-
 for(let i=0;i<90;i++){
-
 particles.push({
 x:x,
 y:y,
@@ -210,43 +146,34 @@ angle:Math.random()*Math.PI*2,
 radius:Math.random()*3+1,
 life:100
 });
-
 }
-
 }
-
 function animate(){
-
 ctx.fillStyle="rgba(0,0,0,0.15)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
-
 particles.forEach((p,index)=>{
-
 p.x+=Math.cos(p.angle)*p.speed;
 p.y+=Math.sin(p.angle)*p.speed;
 p.life--;
-
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
 ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
 ctx.fill();
-
-if(p.life<=0){
-particles.splice(index,1);
-}
-
+if(p.life<=0){particles.splice(index,1);}
 });
-
 requestAnimationFrame(animate);
-
 }
-
 setInterval(createFirework,700);
 animate();
-
 }
 
+/* المرحلة الثانية وتشغيل الأغنية */
+function nextStage(){
+document.getElementById("stage1").style.display="none";
+document.getElementById("stage2").style.display="block";
+document.getElementById("birthdaySong").play();
+startFireworks();
+}
 </script>
-
 </body>
 </html>
