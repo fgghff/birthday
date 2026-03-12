@@ -2,88 +2,186 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>عيد ميلاد سعيد</title>
+<title>عيد ميلاد سعيد رانيا</title>
 
 <style>
 body{
-    background: linear-gradient(135deg,#ff758c,#ff7eb3);
-    font-family: Arial;
-    text-align:center;
-    color:white;
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
+font-family:Tahoma;
+background:linear-gradient(135deg,#ff4e8a,#ff9ac6,#ffd6e7);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+overflow:hidden;
 }
 
 .container{
-    margin-top:120px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(10px);
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 25px rgba(0,0,0,0.2);
+width:80%;
+max-width:600px;
 }
 
 h1{
-    font-size:45px;
+font-size:40px;
+margin-bottom:10px;
+}
+
+h2{
+color:#fff;
+margin-top:0;
 }
 
 p{
-    font-size:22px;
-    width:70%;
-    margin:auto;
-    line-height:1.8;
-}
-
-.heart{
-    font-size:40px;
-    animation: beat 1s infinite;
-}
-
-@keyframes beat{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.3)}
-    100%{transform:scale(1)}
+font-size:20px;
+line-height:1.8;
 }
 
 button{
-    margin-top:30px;
-    padding:15px 30px;
-    font-size:18px;
-    border:none;
-    border-radius:25px;
-    background:white;
-    color:#ff4f81;
-    cursor:pointer;
+margin-top:25px;
+padding:15px 35px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff3b7f;
+cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-    background:#ffe3ec;
+transform:scale(1.1);
+background:#ffe3ef;
+}
+
+.heart{
+position:absolute;
+font-size:25px;
+animation:float 6s linear infinite;
+color:white;
+opacity:0.8;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="fireworks"></canvas>
+
 <div class="container">
 
-<h1>🎂 عيد ميلاد سعيد حبيبتي 🎂</h1>
+<h1>🎂 عيد ميلاد سعيد 🎂</h1>
+<h2>الى حبيبتي رانيا</h2>
 
 <p>
 اليوم ليس يوما عاديا  
-اليوم هو اليوم الذي جاء فيه اجمل شخص في حياتي  
-اتمنى لك سنة مليئة بالسعادة والنجاح  
-وان تبقي دائما السبب في ابتسامتي  
+اليوم هو اليوم الذي جاءت فيه اجمل انسانة في حياتي  
+رانيا وجودك جعل حياتي اجمل واكثر نورا  
+ابتسامتك تجعل قلبي سعيد دائما  
+اتمنى لك سنة مليئة بالفرح والنجاح والاحلام الجميلة  
 </p>
 
-<div class="heart">❤️</div>
+<p>
+من حبيبك عبدالله ❤️
+</p>
 
-<button onclick="showMessage()">اضغطي هنا</button>
-
-<p id="msg"></p>
+<button onclick="celebrate()">اضغطي هنا</button>
 
 </div>
 
 <script>
-function showMessage(){
-document.getElementById("msg").innerHTML =
-"احبك كثيرا واتمنى ان اكون معك في كل اعياد ميلادك القادمة ❤️";
+
+function celebrate(){
+startFireworks();
+alert("رانيا كل عام وانت اجمل ما في حياتي ❤️");
 }
+
+function startFireworks(){
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework(){
+let x = Math.random()*canvas.width;
+let y = Math.random()*canvas.height/2;
+
+for(let i=0;i<80;i++){
+particles.push({
+x:x,
+y:y,
+speed:Math.random()*5+1,
+angle:Math.random()*Math.PI*2,
+radius:Math.random()*3+1,
+life:100
+});
+}
+}
+
+function animate(){
+ctx.fillStyle="rgba(0,0,0,0.1)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+particles.forEach((p,index)=>{
+p.x+=Math.cos(p.angle)*p.speed;
+p.y+=Math.sin(p.angle)*p.speed;
+p.life--;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.fill();
+
+if(p.life<=0){
+particles.splice(index,1);
+}
+});
+
+requestAnimationFrame(animate);
+}
+
+setInterval(createFirework,800);
+animate();
+
+}
+
+function createHeart(){
+const heart = document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=4+Math.random()*4+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove()},6000);
+}
+
+setInterval(createHeart,500);
+
 </script>
 
 </body>
-</html>
+    </html>
