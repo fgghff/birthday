@@ -26,7 +26,6 @@ box-shadow:0 15px 40px rgba(0,0,0,0.25);
 width:90%;
 max-width:700px;
 position:relative;
-z-index:2;
 }
 
 .profile{
@@ -84,7 +83,7 @@ z-index:1;
 
 <canvas id="fireworks"></canvas>
 
-<div class="container">
+<div class="container" id="stage1">
 
 <img class="profile" src="https://a.top4top.io/p_3723fzcei0.jpg">
 
@@ -105,11 +104,14 @@ z-index:1;
 
 <button onclick="startCelebration()">اضغطي هنا</button>
 
-<p id="stage2" style="margin-top:25px;font-size:20px;"></p>
+</div>
 
-<audio id="birthdaySong" loop>
-  <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a" type="audio/mp4">
-</audio>
+<div class="container" id="stage2" style="display:none;">
+<h1>🎉 لنحتفل الآن 🎉</h1>
+<p>استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨</p>
+</div>
+
+<audio id="birthdaySong" src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview123/v4/fb/e4/d2/fbe4d2ed-5357-9855-5898-1fad176a62bf/mzaf_11791228578074490528.plus.aac.p.m4a"></audio>
 
 <script>
 /* القلوب */
@@ -165,11 +167,10 @@ animate();
 
 /* تشغيل المرحلة الثانية والأغنية */
 function startCelebration(){
-document.getElementById("stage2").innerHTML="🎉 استمتعي بأغنية عيد الميلاد والعرض الخاص 🎵✨";
+document.getElementById("stage2").style.display="block";
 document.getElementById("birthdaySong").play();
 startFireworks();
 }
 </script>
-
 </body>
 </html>
