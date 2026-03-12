@@ -5,11 +5,12 @@
 <title>عيد ميلاد سعيد رانيا</title>
 
 <style>
+
 body{
 margin:0;
 padding:0;
 font-family:Tahoma;
-background:linear-gradient(135deg,#ff4e8a,#ff9ac6,#ffd6e7);
+background:linear-gradient(135deg,#ff6fa5,#ff9ec9,#ffd6ea);
 height:100vh;
 display:flex;
 align-items:center;
@@ -19,24 +20,35 @@ color:white;
 overflow:hidden;
 }
 
+/* صندوق التصميم */
 .container{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(10px);
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(12px);
 padding:40px;
-border-radius:20px;
-box-shadow:0 0 25px rgba(0,0,0,0.2);
-width:80%;
-max-width:600px;
+border-radius:25px;
+box-shadow:0 10px 35px rgba(0,0,0,0.25);
+width:85%;
+max-width:650px;
+}
+
+/* صورة رانيا */
+.profile{
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid white;
+box-shadow:0 0 15px rgba(0,0,0,0.3);
+margin-bottom:15px;
 }
 
 h1{
-font-size:40px;
-margin-bottom:10px;
+font-size:38px;
+margin:10px 0;
 }
 
 h2{
-color:#fff;
-margin-top:0;
+margin:0;
 }
 
 p{
@@ -44,6 +56,7 @@ font-size:20px;
 line-height:1.8;
 }
 
+/* زر */
 button{
 margin-top:25px;
 padding:15px 35px;
@@ -61,17 +74,24 @@ transform:scale(1.1);
 background:#ffe3ef;
 }
 
+/* القلوب */
 .heart{
 position:absolute;
+bottom:-30px;
 font-size:25px;
-animation:float 6s linear infinite;
-color:white;
-opacity:0.8;
+animation:floatUp 6s linear infinite;
+opacity:0.9;
 }
 
-@keyframes float{
-0%{transform:translateY(100vh)}
-100%{transform:translateY(-10vh)}
+@keyframes floatUp{
+0%{
+transform:translateY(0);
+opacity:1;
+}
+100%{
+transform:translateY(-110vh);
+opacity:0;
+}
 }
 
 canvas{
@@ -80,6 +100,7 @@ top:0;
 left:0;
 pointer-events:none;
 }
+
 </style>
 </head>
 
@@ -88,6 +109,8 @@ pointer-events:none;
 <canvas id="fireworks"></canvas>
 
 <div class="container">
+
+<img class="profile" src="https://a.top4top.io/p_3723fzcei0.jpg">
 
 <h1>🎂 عيد ميلاد سعيد 🎂</h1>
 <h2>الى حبيبتي رانيا</h2>
@@ -110,24 +133,41 @@ pointer-events:none;
 
 <script>
 
+/* القلوب من البداية */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=4+Math.random()*4+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+}
+
+setInterval(createHeart,400);
+
+/* الاحتفال */
 function celebrate(){
 startFireworks();
-alert("رانيا كل عام وانت اجمل ما في حياتي ❤️");
 }
+
+/* الألعاب النارية */
 
 function startFireworks(){
 
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-let particles = [];
+let particles=[];
 
 function createFirework(){
-let x = Math.random()*canvas.width;
-let y = Math.random()*canvas.height/2;
+
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height/2;
 
 for(let i=0;i<80;i++){
 particles.push({
@@ -139,13 +179,16 @@ radius:Math.random()*3+1,
 life:100
 });
 }
+
 }
 
 function animate(){
+
 ctx.fillStyle="rgba(0,0,0,0.1)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
 particles.forEach((p,index)=>{
+
 p.x+=Math.cos(p.angle)*p.speed;
 p.y+=Math.sin(p.angle)*p.speed;
 p.life--;
@@ -158,30 +201,19 @@ ctx.fill();
 if(p.life<=0){
 particles.splice(index,1);
 }
+
 });
 
 requestAnimationFrame(animate);
+
 }
 
-setInterval(createFirework,800);
+setInterval(createFirework,700);
 animate();
 
 }
 
-function createHeart(){
-const heart = document.createElement("div");
-heart.classList.add("heart");
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=4+Math.random()*4+"s";
-document.body.appendChild(heart);
-
-setTimeout(()=>{heart.remove()},6000);
-}
-
-setInterval(createHeart,500);
-
 </script>
 
 </body>
-</html>
+  </html>
